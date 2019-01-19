@@ -1,0 +1,25 @@
+﻿body{
+    margin-top: 20px;
+}
+
+span{
+    font-size: 14px;
+    font-weight: 600;
+    margin-top: 10px;
+}
+input {
+    font-size: 14px;
+    height: 30px;
+    width: 150px;
+    margin-top: 10px;
+}
+.login{
+    margin-left: 27px;
+}
+.registerButton {
+    margin-top: 20px;
+    font-size: 12px;
+    height: 20px;
+    width: 150px;
+    margin-top: 10px;
+}

@@ -1,0 +1,13 @@
+﻿@{
+    ViewBag.Title = "Registration";
+}
+<link href="~/Content/AuthorizationStyle.css" rel="stylesheet" />
+
+<form action="/AuthorizationController.cs" method="post">
+    <span>Login: </span>
+    <input type="text" name="login" value="" /><br />
+    <span>Password: </span>
+    <input type="password" name="password" value="" /> <br /> <br />
+    <input type="button" name="submit" value="Войти" /> <br />
+    <input class="registerButton" type="submit" name="registration" value="Зарегистрироватся" />
+</form>
