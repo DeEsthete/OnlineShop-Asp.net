@@ -18,7 +18,14 @@ namespace ApNetShop.Controllers
         // GET: Books
         public async Task<ActionResult> Index()
         {
-            return View(await db.Books.ToListAsync());
+            if (ViewBag.User.IsAdmin)
+            {
+                return View(await db.Books.ToListAsync());
+            }
+            else
+            {
+                return View("/Shop/Index");
+            }
         }
 
         // GET: Books/Details/5
@@ -69,7 +76,7 @@ namespace ApNetShop.Controllers
             }
             Book book = await db.Books.FindAsync(id);
             if (book == null)
-            {
+            { 
                 return HttpNotFound();
             }
             return View(book);
