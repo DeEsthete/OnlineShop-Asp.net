@@ -16,15 +16,16 @@ namespace ApNetShop.Controllers
         private ShopContext db = new ShopContext();
 
         // GET: Books
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(User user)
         {
-            if (ViewBag.User.IsAdmin)
+            ViewBag.User = user;
+            if (user.IsAdmin)
             {
                 return View(await db.Books.ToListAsync());
             }
             else
             {
-                return View("/Shop/Index");
+                return RedirectToAction("Index", "Shop", user);
             }
         }
 

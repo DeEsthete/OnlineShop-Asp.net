@@ -13,10 +13,13 @@ namespace ApNetShop.Controllers
     public class ShopController : Controller
     {
         private ShopContext db = new ShopContext();
+        private User user;
 
         // GET: Shop
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(User user)
         {
+            this.user = user;
+            ViewBag.User = user;
             return View(await db.Books.ToListAsync());
         }
 
@@ -36,8 +39,9 @@ namespace ApNetShop.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.User.Cart.Add(book);
-            return View("Index");
+            user.Cart.Add(book);
+            db.SaveChanges();
+            return RedirectToAction("Index", "Shop", user);
         }
     }
 }

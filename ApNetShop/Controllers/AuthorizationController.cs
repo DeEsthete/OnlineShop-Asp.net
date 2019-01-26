@@ -20,28 +20,68 @@ namespace ApNetShop.Controllers
             return View();
         }
 
-        [HttpGet]
-        public ActionResult SignIn(User user)
+        [HttpPost]
+        public ActionResult SignIn(List<string> property)
         {
+            string login = property[0];
+            string password = property[1];
             foreach(var i in db.Users)
             {
-                if (i.Login == user.Login)
+                if (i.Login == login)
                 {
-                    if (i.Password == user.Password)
+                    if (i.Password == password)
                     {
-                        ViewBag.User = i;
                         if (i.IsAdmin)
                         {
-                            return View("/Books/Index");
+                            return RedirectToAction("Index", "Books", i);
                         }
                         else
                         {
-                            return View("/Shop/Index");
+                            return RedirectToAction("Index", "Shop", i);
                         }
                     }
                 }
             }
-            return View("Index");
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public ActionResult SignUp(List<string> property)
+        {
+            bool isOk = false;
+
+            User user = new User();
+            string fullName = property[0];
+            string login = property[1];
+            string password = property[2];
+            string isAdmin = property[3];
+            if (fullName != null && login != null && password != null && isAdmin != null)
+            {
+                user.FullName = fullName;
+                user.Login = login;
+                user.Password = password;
+                if (isAdmin == "t")
+                {
+                    user.IsAdmin = true;
+                    isOk = true;
+                }
+                else if (isAdmin == "f")
+                {
+                    user.IsAdmin = false;
+                    isOk = true;
+                }
+
+                if (isOk)
+                {
+                    db.Users.Add(user);
+                    db.SaveChanges();
+                }
+                else
+                {
+                    return RedirectToAction("Registration");
+                }
+            }
+            return RedirectToAction("Registration");
         }
     }
 }
